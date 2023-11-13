@@ -1,0 +1,82 @@
+.container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border: 0.05em solid #777;
+    border-radius: 0.25em;
+    gap: 0.5em;
+    min-height: 1.5em;
+    outline: none;
+    padding: 0.5em;
+    width: 20em;
+}
+
+.container:focus {
+    border-color: hsl(200, 100%, 50%);
+}
+
+.value {
+    flex-grow: 1;
+}
+
+.clear-btn {
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    font-size: 1.25em;
+    outline: none;
+    padding: 0;
+}
+
+.clear-btn:focus,
+.clear-btn:hover {
+    color: #333;
+}
+
+.divider {
+    align-self: stretch;
+    background-color: #777;
+    width: 0.05em;
+}
+
+.caret {
+    border: 0.25em solid transparent;
+    border-top-color: #777;
+    translate: 0 25%;
+}
+
+.options {
+    background-color: white;
+    border: 0.05em solid #777;
+    border-radius: 0.25em;
+    display: none;
+    left: 0;
+    list-style: none;
+    margin: 0;
+    max-height: 15em;
+    overflow-y: auto;
+    padding: 0;
+    position: absolute;
+    top: calc(100% + 0.25em);
+    width: 100%;
+    z-index: 100;
+}
+
+.options.show {
+    display: block;
+}
+
+.option {
+    cursor: pointer;
+    padding: 0.25em 0.5em;
+}
+
+.option.highlighted {
+    background-color: hsl(200, 100%, 50%);
+    color: white;
+}
+
+.option.selected {
+    background-color: hsl(200, 100%, 70%);
+}
