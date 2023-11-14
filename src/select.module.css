@@ -16,7 +16,10 @@
 }
 
 .value {
+    display: flex;
     flex-grow: 1;
+    flex-wrap: wrap;
+    gap: 0.5em;
 }
 
 .clear-btn {
@@ -79,4 +82,32 @@
 .option.highlighted {
     background-color: hsl(200, 100%, 50%);
     color: white;
+}
+
+.option-badge {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: 0.05em solid #777;
+    border-radius: 0.25em;
+    cursor: pointer;
+    gap: 0.25em;
+    padding: 0.15em 0.25em;
+    outline: none;
+}
+
+.option-badge:hover,
+.option-badge:focus {
+    background-color: hsla(0, 100%, 90%);
+    border-color: hsl(0, 100%, 50%);
+}
+
+.option-badge:hover > .remove-btn,
+.option-badge:focus > .remove-btn {
+    color: hsl(0, 100%, 50%);
+}
+
+.option-badge > .remove-btn {
+    color: #777;
+    font-size: 1.25em;
 }

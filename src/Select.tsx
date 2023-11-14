@@ -6,26 +6,46 @@ export type SelectOption = {
     value: string | number,
 }
 
-type SelectProps = {
-    value?: SelectOption
-    onChange: (value: SelectOption | undefined) => void
-    options: SelectOption[]
+type MultipleSelectProps = {
+    value?: SelectOption[]
+    onChange: (value: SelectOption[]) => void
+    multiple: true
 }
 
-export function Select({ value, onChange, options }: SelectProps) {
+type SingleSelectProps = {
+    value?: SelectOption
+    onChange: (value: SelectOption | undefined) => void
+    multiple?: false
+}
+
+type SelectProps = {
+    options: SelectOption[]
+} & (SingleSelectProps | MultipleSelectProps)
+
+export function Select({ multiple, value, onChange, options }: SelectProps) {
     const [isOpen, setIsOpen] = useState(false)
-    const [highlightedIndex, setHighlightedIndex] = useState(undefined)
+    const [highlightedIndex, setHighlightedIndex] = useState<number | undefined>(undefined)
 
     function clearOptions() {
-        onChange(undefined)
+        multiple ? onChange([]) : onChange(undefined)
     }
 
     function selectOption(option: SelectOption) {
-        if (option !== value) onChange(option)
+        if (multiple) {
+            if (value?.includes(option)) {
+                // if the option was already selected, it will deselected
+                onChange(value.filter(o => o !== option))
+            } else {
+                // if the option was not selected, it will add it to the array
+                onChange([...(value || []), option])
+            }
+        } else {
+            if (option !== value) onChange(option)
+        }
     }
 
     function isOptionSelected(option: SelectOption) {
-        return option === value
+        return multiple ? value?.includes(option) : option === value
     }
 
     useEffect(() => {
@@ -39,7 +59,25 @@ export function Select({ value, onChange, options }: SelectProps) {
             tabIndex={0} // specify the element is focusable and to define the order in which it receive focus using the tab
             className={styles.container}
         >
-            <span className={styles.value}>{value?.label}</span>
+            <span className={styles.value}>
+                {
+                    multiple ? 
+                    value?.map(v => (
+                        <button
+                            key={v.value}
+                            onClick={e => {
+                                e.stopPropagation()
+                                selectOption(v)
+                            }}
+                            className={styles["option-badge"]}
+                        >
+                            {v.label}
+                            <span className={styles["remove-btn"]}>&times;</span>
+                        </button>
+                    )) : 
+                    value?.label
+                }
+            </span>
             <button 
                 onClick={e => {
                     e.stopPropagation() // stops the click event from going to the parent div
