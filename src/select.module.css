@@ -72,11 +72,11 @@
     padding: 0.25em 0.5em;
 }
 
+.option.selected {
+    background-color: hsl(200, 100%, 70%);
+}
+
 .option.highlighted {
     background-color: hsl(200, 100%, 50%);
     color: white;
-}
-
-.option.selected {
-    background-color: hsl(200, 100%, 70%);
 }
